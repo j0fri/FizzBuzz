@@ -1,8 +1,6 @@
 from functools import reduce
 
 if __name__ == '__main__':
-    defaultRules = {3: True, 5: True, 7: True, 11: True, 13: True, 17: True}
-
     #Prompt for how many numbers
     print("How many numbers do you want to print?")
     lastNum = input()
@@ -12,6 +10,7 @@ if __name__ == '__main__':
         raise Exception("Input must be greater than zero.")
 
     #Prompt for which default rules to disable
+    defaultRules = {3: True, 5: True, 7: True, 11: True, 13: True, 17: True}
     while True:
         print("Type a number to disable/enable its default rule or \"exit\" to continue")
         rule = input()
@@ -56,24 +55,26 @@ if __name__ == '__main__':
             print("Set word for " + str(rule))
             customRules[rule] = input()
 
-    print(customRules)
     #print output for each number
     for i in range(1, int(lastNum)+1):
         outputList = []
+
+        #default standard rules with words
         if i % 3 == 0 and defaultRules[3]:
             outputList.append("Fizz")
         if i % 5 == 0 and defaultRules[5]:
             outputList.append("Buzz")
         if i % 7 == 0 and defaultRules[7]:
             outputList.append("Bang")
-        if i % 11 == 0 and defaultRules[11]:
-            outputList = ["Bong"]
 
-        #execute custom rules
+        #custom rules
         for customRule in customRules:
             if i % customRule == 0:
                 outputList.append(customRules[customRule])
 
+        #default rules executed at the end
+        if i % 11 == 0 and defaultRules[11]:
+            outputList = ["Bong"]
         if i % 13 == 0 and defaultRules[13]:
             startWithB = [word[0] == "B" for word in outputList]
             if any(startWithB):
