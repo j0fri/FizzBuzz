@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
     #Prompt for which default rules to disable
     while True:
-        print("Type a number to disable/enable its default rule or \"exit\" to finish")
+        print("Type a number to disable/enable its default rule or \"exit\" to continue")
         rule = input()
         if rule == "exit":
             break
@@ -31,6 +31,32 @@ if __name__ == '__main__':
             defaultRules[rule] = True
             print("Rule for " + str(rule) + " enabled.")
 
+    #Prompt for custom rules
+    print("To add custom rules. Please input a number and then an associated word.")
+    print("The number must be a positive integer which is not associated to any enabled default rule.")
+    print("Rules will be executed in increasing order after the default rules (except 13 and 17).")
+    customRules = dict()
+    while True:
+        print("Enter number for a custom rule or \"exit\" to continue")
+        rule = input()
+        if rule == "exit":
+            break
+        if not rule.isdigit():
+            print("Please enter only a positive integer or \"exit\"")
+            continue
+        rule = int(rule)
+        if rule in defaultRules:
+            if defaultRules[rule]:
+                print(str(rule) + " already has an enabled default rule associated")
+                continue
+        if rule in customRules:
+            print("Update word for " + str(rule))
+            customRules[rule] = input()
+        else:
+            print("Set word for " + str(rule))
+            customRules[rule] = input()
+
+    print(customRules)
     #print output for each number
     for i in range(1, int(lastNum)+1):
         outputList = []
@@ -42,6 +68,12 @@ if __name__ == '__main__':
             outputList.append("Bang")
         if i % 11 == 0 and defaultRules[11]:
             outputList = ["Bong"]
+
+        #execute custom rules
+        for customRule in customRules:
+            if i % customRule == 0:
+                outputList.append(customRules[customRule])
+
         if i % 13 == 0 and defaultRules[13]:
             startWithB = [word[0] == "B" for word in outputList]
             if any(startWithB):
@@ -51,6 +83,7 @@ if __name__ == '__main__':
         if i % 17 == 0 and defaultRules[17]:
             outputList.reverse() #What to do if only multiple of 17? Right now will just print the number
             #Also should the Fezz also be reversed or still before the first B?
+
         if len(outputList) == 0:
             print(i)
         else:
