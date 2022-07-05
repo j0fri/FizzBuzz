@@ -55,6 +55,7 @@ if __name__ == '__main__':
             print("Set word for " + str(rule))
             customRules[rule] = input()
 
+    ### Could we seperate out the FizzBuzz logic into its own function with a appropriate name
     #print output for each number
     for i in range(1, int(lastNum)+1):
         outputList = []
@@ -82,6 +83,7 @@ if __name__ == '__main__':
             else:
                 outputList.append("Fezz")
         if i % 17 == 0 and defaultRules[17]:
+            ### Good catch! Your current logic is fine :)
             outputList.reverse() #What to do if only multiple of 17? Right now will just print the number
             #Also should the Fezz also be reversed or still before the first B?
 
@@ -89,4 +91,5 @@ if __name__ == '__main__':
             print(i)
         else:
             print(reduce(lambda x, y: x + y, outputList, ""))
+            ### Could we remove any un-needed code
             #print(str(i)+": " + reduce(lambda x, y: x + y, outputList, ""))
